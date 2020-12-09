@@ -39,27 +39,23 @@ jobs:
           curl -sL -O https://github.com/g0v/moedict-data/raw/master/dict-cat.json
           perl to-epub.pl
           
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: git-get-release-action
+        id: get_release
+        uses: cardinalby/git-get-release-action@1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
+    
       - name: Upload a Release Asset
-        uses: actions/upload-release-asset@v1.0.2
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # The URL for uploading assets to the release
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.get_release.outputs.upload_url }}
           # The path to the asset you want to upload
           asset_path: ./moedict.epub
           # The name of the asset you want to upload
           asset_name: moedict.epub
           # The content-type of the asset you want to upload. See the supported Media Types here: https://www.iana.org/assignments/media-types/media-types.xhtml for more information
           asset_content_type: application/epub+zip
+
