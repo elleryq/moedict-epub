@@ -34,8 +34,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           cpanm --sudo Unicode::Collate Mojo JSON Mojo EBook::EPUB EBook::EPUB::Lite File::Slurp
-          curl -s -O https://github.com/g0v/moedict-data/raw/master/dict-revised.json
-          curl -s -O https://github.com/g0v/moedict-data/raw/master/dict-cat.json
+          curl -sL -O https://github.com/g0v/moedict-data/raw/master/dict-revised.json
+          curl -sL -O https://github.com/g0v/moedict-data/raw/master/dict-cat.json
           perl to-epub.pl
           
       - name: Upload a Build Artifact
