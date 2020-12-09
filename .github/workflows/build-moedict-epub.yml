@@ -39,6 +39,8 @@ jobs:
           curl -sL -O https://github.com/g0v/moedict-data/raw/master/dict-cat.json
           perl to-epub.pl
 
+      # https://github.community/t/how-to-get-just-the-tag-name/16241/4
+      # Follow zbrox's answer
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
@@ -51,6 +53,7 @@ jobs:
         with:
           tag: ${{ steps.get_version.outputs.VERSION }}
 
+      # https://github.com/actions/upload-release-asset
       - name: Upload a Release Asset
         uses: actions/upload-release-asset@v1
         env:
